@@ -58,3 +58,4 @@ end
 
 gem "omniauth"
 gem "omniauth-keycloak"
+gem "rails_keycloak_authorization"
