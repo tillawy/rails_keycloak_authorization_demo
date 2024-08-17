@@ -18,5 +18,4 @@ Rails.application.routes.draw do
   get "/oauth/:provider/callback", to: "oauth#create"
 
   mount RailsKeycloakAuthorization::Engine, at: "/rka", constraints: lambda { |request| request.remote_ip == "127.0.0.1" }
-
 end
