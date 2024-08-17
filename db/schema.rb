@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_16_112706) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_17_053633) do
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -19,15 +19,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_16_112706) do
 
   create_table "secrets", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_secrets_on_user_id"
   end
 
-# Could not dump table "users" because of following StandardError
-#   Unknown type 'uuid' for column 'id'
-
-
-  add_foreign_key "secrets", "users"
+  create_table "users", id: :string, default: -> { "lower(hex(randomblob(16)))" }, force: :cascade do |t|
+    t.string "email", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
 end

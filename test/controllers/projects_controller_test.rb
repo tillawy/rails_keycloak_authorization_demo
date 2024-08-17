@@ -6,41 +6,41 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get projects_url
+    get projects_url, headers: { "Authorization" => "Bearer #{JWT.encode({ email: users(:one).email, sub: users(:one).id }, nil, 'none')}" }
     assert_response :success
   end
 
   test "should get new" do
-    get new_project_url
+    get new_project_url, headers: { "Authorization" => "Bearer #{JWT.encode({ email: users(:one).email, sub: users(:one).id }, nil, 'none')}" }
     assert_response :success
   end
 
   test "should create project" do
     assert_difference("Project.count") do
-      post projects_url, params: { project: { name: @project.name } }
+      post projects_url, params: { project: { name: @project.name } }, headers: { "Authorization" => "Bearer #{JWT.encode({ email: users(:one).email, sub: users(:one).id }, nil, 'none')}" }
     end
 
     assert_redirected_to project_url(Project.last)
   end
 
   test "should show project" do
-    get project_url(@project)
+    get project_url(@project), headers: { "Authorization" => "Bearer #{JWT.encode({ email: users(:one).email, sub: users(:one).id }, nil, 'none')}" }
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_project_url(@project)
+    get edit_project_url(@project), headers: { "Authorization" => "Bearer #{JWT.encode({ email: users(:one).email, sub: users(:one).id }, nil, 'none')}" }
     assert_response :success
   end
 
   test "should update project" do
-    patch project_url(@project), params: { project: { name: @project.name } }
+    patch project_url(@project), params: { project: { name: @project.name } }, headers: { "Authorization" => "Bearer #{JWT.encode({ email: users(:one).email, sub: users(:one).id }, nil, 'none')}" }
     assert_redirected_to project_url(@project)
   end
 
   test "should destroy project" do
     assert_difference("Project.count", -1) do
-      delete project_url(@project)
+      delete project_url(@project), headers: { "Authorization" => "Bearer #{JWT.encode({ email: users(:one).email, sub: users(:one).id }, nil, 'none')}" }
     end
 
     assert_redirected_to projects_url

@@ -4,7 +4,7 @@ module WithCurrentUser
     before_action :authenticate_user!
 
     def authenticate_user!
-      raise Errors::NotAuthenticatedError unless current_user
+      raise "NotAuthenticatedError" unless current_user
     end
 
     def current_user
@@ -12,7 +12,8 @@ module WithCurrentUser
     end
 
     def user_with(id:, email:, first_name:, last_name:)
-      User.find_or_create_by!(id: id, email: email, first_name: first_name, last_name: last_name)
+      upsert = User.upsert({ id: id, email: email, first_name: first_name, last_name: last_name }, unique_by: :id)
+      User.find(upsert.first["id"])
     end
 
     def jwk_user_from(jwt:)
