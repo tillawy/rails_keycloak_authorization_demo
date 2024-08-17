@@ -16,5 +16,4 @@ Rails.application.routes.draw do
 
   get "/", to: "oauth#new"
   get "/oauth/:provider/callback", to: "oauth#create"
-
 end

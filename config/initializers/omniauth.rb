@@ -16,4 +16,3 @@ OmniAuth.config.logger = Rails.logger
 OmniAuth.config.path_prefix = ENV.fetch("KEYCLOAK_AUTH_SERVER_PATH_PREFIX", "/oauth")
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?
-

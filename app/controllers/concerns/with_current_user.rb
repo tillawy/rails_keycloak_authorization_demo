@@ -34,12 +34,12 @@ module WithCurrentUser
         @cached_keys ||= JSON.parse res.body
       end
 
-      decoded = JWT.decode(jwt, nil, !Rails.env.test?, {algorithms: ["RS256"], jwks: jwk_loader})
+      decoded = JWT.decode(jwt, nil, !Rails.env.test?, { algorithms: [ "RS256" ], jwks: jwk_loader })
 
       email = decoded[0]["email"] || decoded[0]["preferred_username"]
       id = decoded[0]["sub"]
       logger.debug("found (email:#{email}, id: #{id})")
-      {email: email, id: id, first_name: decoded[0]["given_name"], last_name: decoded[0]["family_name"]}
+      { email: email, id: id, first_name: decoded[0]["given_name"], last_name: decoded[0]["family_name"] }
     end
 
     def extract_token_from(headers:)
@@ -70,4 +70,3 @@ module WithCurrentUser
     end
   end
 end
-
