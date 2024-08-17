@@ -3,6 +3,7 @@
 <% content_for :title, "Projects" %>
 
 <h1>Projects</h1>
+<h2>Welcome <%= @current_user.first_name %></h2>
 
 <div id="projects">
   <% @projects.each do |project| %>

@@ -1,8 +1,10 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ show edit update destroy ]
+  include WithCurrentUser
 
   # GET /projects or /projects.json
   def index
+    @current_user = current_user
     @projects = Project.all
   end
 

@@ -60,6 +60,5 @@ end
 
 gem "omniauth"
 gem "omniauth-keycloak"
-gem "keycloak-admin", ">= 1.1.3"
 
 
