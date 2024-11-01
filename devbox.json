@@ -1,0 +1,43 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.11.1/.schema/devbox.schema.json",
+  "packages": [
+    "ruby@3.3.2",
+    "sqlite@3.45.3",
+    "opentofu@latest",
+    "keycloak@latest",
+    "jq@latest"
+  ],
+  "include": [],
+  "env": {
+    "KEYCLOAK_SERVER_URL":             "http://localhost:8080",
+    "KEYCLOAK_ADMIN_CLIENT_ID":        "keycloak-admin",
+    "KEYCLOAK_ADMIN_CLIENT_SECRET":    "keycloak-admin-client-secret-xxx",
+    "KEYCLOAK_ADMIN_SERVER_URL":       "http://localhost:8080",
+    "KEYCLOAK_ADMIN_SERVER_DOMAIN":    "localhost",
+    "KEYCLOAK_ADMIN_REALM_NAME":       "master",
+    "KEYCLOAK_ADMIN_USER":             "admin",
+    "KEYCLOAK_ADMIN_PASSWORD":         "admin",
+    "KEYCLOAK_AUTH_CLIENT_REALM_NAME": "dummy",
+    "KEYCLOAK_AUTH_CLIENT_ID":         "dummy-client",
+    "KEYCLOAK_AUTH_CLIENT_SECRET":     "dummy-client-super-secret-xxx"
+  },
+  "shell": {
+    "init_hook": [
+      "echo 'Welcome to devbox!' > /dev/null"
+    ],
+    "scripts": {
+      "test": [
+        "echo \"Error: no test specified\" && exit 1"
+      ],
+      "tofu": [
+        "tofu -chdir=tofu init",
+        "tofu -chdir=tofu apply -auto-approve"
+      ],
+      "keycloak": [
+        "export KC_HOME_DIR=$(readlink -f  $(which kc.sh) | sed 's|bin\\/kc.sh||')",
+        "sudo ls $KC_HOME_DIR/data || (sudo mkdir -p $KC_HOME_DIR/data && sudo chown -R $(whoami) $KC_HOME_DIR/lib/quarkus && sudo chown -R $(whoami) $KC_HOME_DIR/data)",
+        "kc.sh start-dev --hostname=http://localhost:8080 --hostname-admin=http://localhost:8080 --http-enabled=true --verbose"
+      ]
+    }
+  }
+}
